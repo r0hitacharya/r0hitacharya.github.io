@@ -98,6 +98,253 @@
             background-color: var(--border-color);
             color: var(--text-primary);
         }
+        
+        /* Mobile-specific improvements */
+        @media (max-width: 768px) {
+            /* Improved container padding */
+            #main-container {
+                padding: 1rem !important;
+                max-width: 100% !important;
+            }
+            
+            /* Header improvements */
+            header {
+                text-align: center !important;
+                margin-bottom: 2rem !important;
+            }
+            
+            header h1 {
+                font-size: 2rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            header p {
+                font-size: 1.1rem !important;
+                margin-top: 0.5rem !important;
+            }
+            
+            /* Contact links - stack vertically on mobile */
+            header .flex.flex-wrap {
+                flex-direction: column !important;
+                gap: 0.75rem !important;
+                align-items: center !important;
+                margin-top: 1rem !important;
+            }
+            
+            header .flex.flex-wrap > span.text-gray-400 {
+                display: none !important;
+            }
+            
+            /* Profile image */
+            header img {
+                width: 6rem !important;
+                height: 6rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            /* Dark mode toggle positioning */
+            #darkModeToggle {
+                position: relative !important;
+                top: auto !important;
+                right: auto !important;
+                margin-top: 1rem !important;
+            }
+            
+            /* REDESIGNED MAIN SECTIONS FOR MOBILE */
+            #main-sections-grid {
+                display: block !important;
+                gap: 0 !important;
+            }
+            
+            /* Mobile section cards - full width list style */
+            #main-sections-grid > div {
+                margin-bottom: 0.5rem !important;
+                border-radius: 0.5rem !important;
+                overflow: hidden !important;
+            }
+            
+            #main-sections-grid .p-4 {
+                padding: 1rem !important;
+            }
+            
+            #main-sections-grid h2 {
+                font-size: 1.125rem !important;
+                font-weight: 600 !important;
+            }
+            
+            #main-sections-grid p {
+                font-size: 0.875rem !important;
+                margin-top: 0.25rem !important;
+                margin-left: 2rem !important;
+            }
+            
+            /* Section content improvements */
+            .section-content {
+                padding: 0 !important;
+                margin-top: 1rem !important;
+            }
+            
+            .section-content.open {
+                max-height: none !important;
+                margin-bottom: 1.5rem !important;
+            }
+            
+            .section-content .p-6 {
+                padding: 1rem !important;
+                margin: 0 !important;
+                border-radius: 0.5rem !important;
+            }
+            
+            /* Timeline improvements */
+            .timeline-item {
+                margin-left: 0 !important;
+                padding-left: 1.5rem !important;
+                margin-bottom: 1.5rem !important;
+            }
+            
+            /* Project cards - better mobile layout */
+            #projects-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
+            .project-card {
+                padding: 1rem !important;
+            }
+            
+            /* Filter buttons - mobile stack */
+            .flex.flex-wrap.gap-2 {
+                display: grid !important;
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)) !important;
+                gap: 0.5rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            /* Technical Skills grid - force single column */
+            .grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-3 {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
+            /* Modal improvements for mobile */
+            #aiModal .bg-card-bg,
+            #chatModal .bg-card-bg {
+                margin: 0.5rem !important;
+                max-width: calc(100vw - 1rem) !important;
+                max-height: calc(100vh - 1rem) !important;
+            }
+            
+            #chatModal .bg-card-bg {
+                height: calc(100vh - 1rem) !important;
+            }
+            
+            /* Chat modal specific */
+            #chatHistory {
+                max-height: 50vh !important;
+                overflow-y: auto !important;
+            }
+            
+            /* Buttons - make them more touch-friendly */
+            button, .summarize-btn {
+                min-height: 44px !important;
+                padding: 0.75rem 1rem !important;
+                font-size: 0.9rem !important;
+            }
+            
+            /* Filter buttons */
+            .filter-btn {
+                min-height: 40px !important;
+                padding: 0.5rem 0.75rem !important;
+                margin-bottom: 0 !important;
+                font-size: 0.8rem !important;
+                text-align: center !important;
+            }
+            
+            /* Text improvements */
+            .professional-text {
+                text-align: left !important;
+                font-size: 0.9rem !important;
+                line-height: 1.6 !important;
+            }
+            
+            /* Experience timeline dots */
+            .timeline-dot {
+                left: -0.5rem !important;
+            }
+            
+            /* Typography scaling */
+            h1 { font-size: 2rem !important; }
+            h2 { font-size: 1.5rem !important; }
+            h3 { font-size: 1.25rem !important; }
+            h4 { font-size: 1.125rem !important; }
+            
+            /* Improved spacing */
+            main.space-y-8 > * + * {
+                margin-top: 1.5rem !important;
+            }
+            
+            /* Show all sections indicator on mobile */
+            #main-sections-grid::before {
+                content: "Tap any section below to expand details:" !important;
+                display: block !important;
+                font-size: 0.9rem !important;
+                color: var(--text-secondary) !important;
+                margin-bottom: 1rem !important;
+                text-align: center !important;
+                font-style: italic !important;
+            }
+        }
+        
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            #main-container {
+                padding: 0.75rem !important;
+            }
+            
+            header h1 {
+                font-size: 1.75rem !important;
+            }
+            
+            header p {
+                font-size: 1rem !important;
+            }
+            
+            header img {
+                width: 5rem !important;
+                height: 5rem !important;
+            }
+            
+            /* Even more compact spacing */
+            main.space-y-12 > * + * {
+                margin-top: 1.5rem !important;
+            }
+            
+            /* Compact cards */
+            .project-card,
+            .bg-bg-color.p-4 {
+                padding: 0.75rem !important;
+            }
+        }
+        
+        /* Touch improvements for all mobile */
+        @media (hover: none) and (pointer: coarse) {
+            /* Better touch targets */
+            button, a, .summarize-btn, .filter-btn {
+                min-height: 44px !important;
+                min-width: 44px !important;
+            }
+            
+            /* Remove hover effects on touch devices */
+            .hover\\:bg-accent-color:hover {
+                background-color: inherit !important;
+            }
+            
+            /* Add active states instead */
+            button:active, .summarize-btn:active {
+                transform: scale(0.95);
+                transition: transform 0.1s;
+            }
+        }
 
         .collapsible-description {
             max-height: 50px; /* Start collapsed */
@@ -149,14 +396,14 @@
 </head>
 <body class="bg-bg-color text-text-primary">
 
-    <div id="main-container" class="container mx-auto max-w-4xl p-4 sm:p-8">
+    <div id="main-container" class="container mx-auto max-w-4xl p-3 sm:p-6 lg:p-8">
         <!-- Header -->
-        <header class="relative flex flex-col sm:flex-row items-center mb-12">
-            <img src="https://media.licdn.com/dms/image/v2/D5603AQGPCovwxGLDHw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1682590588237?e=2147483647&v=beta&t=zZPJZ8F1XDQlLwid00tpVLAGgMbYtflc_n1cjvfQsNA" alt="Rohit Acharya" class="w-32 h-32 rounded-full object-cover border-4 border-accent-color shadow-lg mb-4 sm:mb-0 sm:mr-8">
-            <div class="text-center sm:text-left">
-                <h1 class="text-4xl font-bold text-text-primary">Rohit Acharya</h1>
-                <p class="text-xl text-accent-color font-medium mt-1">AI Lead, Sales Intelligence</p>
-                <div class="flex flex-wrap justify-center sm:justify-start items-center gap-x-4 gap-y-2 mt-3 text-text-secondary">
+        <header class="relative flex flex-col items-center mb-8 sm:mb-12 sm:flex-row">
+            <img src="https://media.licdn.com/dms/image/v2/D5603AQGPCovwxGLDHw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1682590588237?e=2147483647&v=beta&t=zZPJZ8F1XDQlLwid00tpVLAGgMbYtflc_n1cjvfQsNA" alt="Rohit Acharya" class="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-accent-color shadow-lg mb-4 sm:mb-0 sm:mr-8">
+            <div class="text-center sm:text-left flex-1">
+                <h1 class="text-3xl sm:text-4xl font-bold text-text-primary leading-tight">Rohit Acharya</h1>
+                <p class="text-lg sm:text-xl text-accent-color font-medium mt-1">AI Lead, Sales Intelligence</p>
+                <div class="flex flex-col sm:flex-row sm:flex-wrap justify-center sm:justify-start items-center gap-y-2 gap-x-4 mt-3 text-text-secondary text-sm sm:text-base">
                     <a href="mailto:rohit.acharyar@gmail.com" class="flex items-center hover:text-accent-color transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                         Email
@@ -191,13 +438,13 @@
             </button>
         </header>
 
-        <main class="space-y-12">
+        <main class="space-y-8 sm:space-y-12">
             <section>
                  <h2 class="text-2xl font-bold border-b-2 border-border-color pb-2 mb-6 text-text-primary">Philosophy</h2>
                  <p class="text-text-secondary italic professional-text">With a decade-plus of experience in a diverse array of data roles across three different domains, I have strived to develop a T-shaped personality that enables me to think laterally and tackle complex problems. My vision is to help organizations transcend the barriers to AI adoption and unlock its full potential in the digital age.</p>
             </section>
 
-            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="main-sections-grid">
+            <section class="space-y-3 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-4 sm:space-y-0 lg:gap-6" id="main-sections-grid">
                 <!-- Cards will be dynamically inserted here -->
             </section>
 
@@ -492,7 +739,7 @@
             const filterButtons = uniqueCompanies.map(company => `<button class="filter-btn px-3 py-1 text-sm font-semibold rounded-full bg-bg-color border border-border-color hover:bg-accent-color hover:text-white transition-colors" onclick="filterExperience('${company}')">${company}</button>`).join('');
             
             document.getElementById('content-experience').innerHTML = `
-                <div class="flex flex-wrap gap-2 mb-6">${filterButtons}</div>
+                <div class="flex flex-wrap gap-2 mb-6 sm:gap-3">${filterButtons}</div>
                 <div id="experience-timeline" class="relative border-l-2 border-border-color ml-3">${experienceData.map((exp, i) => createTimelineItem(exp, i)).join('')}</div>
             `;
 
@@ -502,7 +749,7 @@
             document.getElementById('content-projects').innerHTML = `
                 <div class="mb-8">
                     <h3 class="text-lg font-bold text-text-primary mb-4 border-b border-border-color pb-2">Technical Skills & Expertise</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-6">
                         <div class="bg-bg-color p-4 rounded-lg border border-border-color">
                             <h4 class="font-semibold text-accent-color mb-2">AI/ML Technologies</h4>
                             <div class="text-sm text-text-secondary space-y-1">
@@ -536,8 +783,8 @@
                 </div>
                 <div>
                     <h3 class="text-lg font-bold text-text-primary mb-4 border-b border-border-color pb-2">Project Portfolio</h3>
-                    <div class="flex flex-wrap gap-2 mb-6">${projectFilterButtons}</div>
-                    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">${projectsData.map(proj => createProjectCard(proj)).join('')}</div>
+                    <div class="flex flex-wrap gap-2 mb-6 sm:gap-3">${projectFilterButtons}</div>
+                    <div id="projects-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">${projectsData.map(proj => createProjectCard(proj)).join('')}</div>
                 </div>
             `;
             document.getElementById('content-education').innerHTML = createEducationCertsSection();
