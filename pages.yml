@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Inject API Key and Deploy
 
 on:
   push:
@@ -6,11 +6,17 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Inject GEMINI_KEY into index.html
+        run: |
+          sed -i "s/__API_KEY__/${GEMINI_KEY}/g" index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -21,5 +27,4 @@ jobs:
           path: ./
 
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v3
