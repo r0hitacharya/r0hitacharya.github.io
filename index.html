@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohit Acharya - AI Lead, Sales Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.        async function callGemini(prompt) {
+            const apiKey = "AIzaSyCIS06JXAE4tLp8o4ttXttFJjpVYPFU6KE"; // The platform provides the key
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+            
+            // Optimized payload for faster responses
+            const payload = { 
+                contents: [{ role: "user", parts: [{ text: prompt }] }],
+                generationConfig: {
+                    maxOutputTokens: 150,  // Limit output for faster generation
+                    temperature: 0.3,      // Lower temperature for more focused responses
+                    topP: 0.8,            // Reduce randomness for speed
+                    topK: 20              // Limit vocabulary for faster selection
+                }
+            };leapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark {
+            --bg-color: #1a202c;
+            --card-bg: #2d3748;
+            --text-primary: #e2e8f0;
+            --text-secondary: #a0aec0;
+            --accent-color: #4299e1;
+            --border-color: #4a5568;
+        }
+        
+        body:not(.dark) {
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --accent-color: #2b6cb0;
+            --border-color: #e2e8f0;
+        }
+
+        .timeline-item .timeline-content {
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+
+        .timeline-dot {
+            transition: background-color 0.3s;
+        }
+        
+        #aiModal.hidden, #chatModal.hidden {
+            display: none;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        .section-content {
+            overflow: hidden;
+            transition: all 0.5s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            margin-top: 0;
+        }
+        
+        .section-content.open {
+            max-height: 3000px; /* Increased max-height */
+            opacity: 1;
+            margin-top: 1.5rem;
+        }
+        
+        .professional-text {
+            line-height: 1.7;
+            text-align: justify;
+            hyphens: auto;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+        
+        .chat-bubble {
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .chat-bubble.user {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .chat-bubble.ai {
+            background-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .collapsible-description {
+            max-height: 50px; /* Start collapsed */
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            cursor: pointer;
+            position: relative;
+        }
+        .collapsible-description::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(to top, var(--bg-color), transparent);
+        }
+        .collapsible-description.expanded {
+            max-height: 1000px; /* Expanded height - increased to accommodate longer content */
+        }
+        .collapsible-description.expanded::after {
+            display: none;
+        }
+        .read-more-btn {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            cursor: pointer;
+            margin-top: 4px;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-color': 'var(--bg-color)',
+                        'card-bg': 'var(--card-bg)',
+                        'text-primary': 'var(--text-primary)',
+                        'text-secondary': 'var(--text-secondary)',
+                        'accent-color': 'var(--accent-color)',
+                        'border-color': 'var(--border-color)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bg-color text-text-primary">
+
+    <div id="main-container" class="container mx-auto max-w-4xl p-4 sm:p-8">
+        <!-- Header -->
+        <header class="relative flex flex-col sm:flex-row items-center mb-12">
+            <img src="https://media.licdn.com/dms/image/v2/D5603AQGPCovwxGLDHw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1682590588237?e=2147483647&v=beta&t=zZPJZ8F1XDQlLwid00tpVLAGgMbYtflc_n1cjvfQsNA" alt="Rohit Acharya" class="w-32 h-32 rounded-full object-cover border-4 border-accent-color shadow-lg mb-4 sm:mb-0 sm:mr-8">
+            <div class="text-center sm:text-left">
+                <h1 class="text-4xl font-bold text-text-primary">Rohit Acharya</h1>
+                <p class="text-xl text-accent-color font-medium mt-1">AI Lead, Sales Intelligence</p>
+                <div class="flex flex-wrap justify-center sm:justify-start items-center gap-x-4 gap-y-2 mt-3 text-text-secondary">
+                    <a href="mailto:rohit.acharyar@gmail.com" class="flex items-center hover:text-accent-color transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        Email
+                    </a>
+                    <span class="text-gray-400 hidden sm:inline">|</span>
+                    <a href="https://linkedin.com/in/rohitacharyar" target="_blank" class="flex items-center hover:text-accent-color transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        LinkedIn
+                    </a>
+                    <span class="text-gray-400 hidden sm:inline">|</span>
+                    <a href="https://github.com/r0hitacharya" target="_blank" class="flex items-center hover:text-accent-color transition-colors">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        GitHub
+                    </a>
+                    <span class="text-gray-400 hidden sm:inline">|</span>
+                    <span class="text-text-secondary ml-2">Singapore/Bangalore</span>
+                    <span class="text-gray-400 hidden sm:inline">|</span>
+                     <a href="tel:+6593815778" class="flex items-center hover:text-accent-color transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        +6593815778
+                    </a>
+                    <span class="text-gray-400 hidden sm:inline">|</span>
+                     <a href="tel:+918217889539" class="flex items-center hover:text-accent-color transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        +918217889539
+                    </a>
+                </div>
+            </div>
+            <button id="darkModeToggle" class="absolute top-0 right-0 p-2 rounded-full hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50 transition-colors">
+                <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-text-primary"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-text-primary hidden"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+        </header>
+
+        <main class="space-y-12">
+            <section>
+                 <h2 class="text-2xl font-bold border-b-2 border-border-color pb-2 mb-6 text-text-primary">Philosophy</h2>
+                 <p class="text-text-secondary italic professional-text">With a decade-plus of experience in a diverse array of data roles across three different domains, I have strived to develop a T-shaped personality that enables me to think laterally and tackle complex problems. My vision is to help organizations transcend the barriers to AI adoption and unlock its full potential in the digital age.</p>
+            </section>
+
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="main-sections-grid">
+                <!-- Cards will be dynamically inserted here -->
+            </section>
+
+            <div id="expandable-content" class="mt-6">
+                <!-- Content sections will be dynamically inserted here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="aiModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-card-bg rounded-lg shadow-xl p-6 w-full max-w-lg">
+            <h3 id="modalTitle" class="text-xl font-bold text-text-primary mb-4"></h3>
+            <div id="modalContent">
+                <div id="modalLoading" class="flex items-center justify-center py-8">
+                    <div class="spinner w-12 h-12 rounded-full border-4 border-t-accent-color border-r-accent-color border-b-accent-color border-l-transparent"></div>
+                    <p class="ml-4 text-text-secondary">AI is thinking...</p>
+                </div>
+                <div id="modalResult" class="text-text-secondary hidden max-h-96 overflow-y-auto professional-text"></div>
+            </div>
+            <div class="mt-6 text-right">
+                <button class="close-modal-btn px-4 py-2 bg-accent-color text-white rounded-lg hover:opacity-90 transition-opacity">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="chatModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-card-bg rounded-lg shadow-xl w-full max-w-lg flex flex-col" style="height: 70vh;">
+            <div class="p-4 border-b border-border-color">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-xl font-bold text-text-primary">Ask about Rohit's Resume</h3>
+                    <button class="close-modal-btn text-text-secondary hover:text-text-primary">&times;</button>
+                </div>
+                <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3">
+                    <p class="text-sm text-yellow-800 dark:text-yellow-200 flex items-center">
+                        <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span><strong>Please note:</strong> Responses may take a moment depending on how broad the question is, data from multiple resume sections to provide accurate answers.</span>
+                    </p>
+                </div>
+            </div>
+            <div id="chatHistory" class="flex-grow p-4 overflow-y-auto space-y-4">
+                <!-- Chat messages will appear here -->
+            </div>
+            <div class="p-4 border-t border-border-color">
+                <div class="flex space-x-2">
+                    <input type="text" id="chatInput" placeholder="e.g., 'Are you willing to travel to client`s location?'" class="flex-grow p-2 border border-border-color rounded-lg bg-bg-color text-text-primary focus:ring-2 focus:ring-accent-color focus:outline-none">
+                    <button id="sendChatBtn" class="px-4 py-2 bg-accent-color text-white rounded-lg hover:opacity-90 transition-opacity">Send</button>
+                    <button id="clearChatBtn" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:opacity-90 transition-opacity">Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-5 right-5 flex flex-col items-end space-y-2">
+        <div class="bg-card-bg text-text-primary px-3 py-2 rounded-lg shadow-lg text-sm whitespace-nowrap border border-border-color">
+            Click here to talk to AI about Rohit's resume
+        </div>
+        <button id="openChatBtn" class="bg-accent-color text-white rounded-full p-4 shadow-lg hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+        </button>
+    </div>
+    
+    <script>
+        // --- DATA ---
+        const experienceData = [
+            { company: 'NTT DATA', title: 'Principal Pre-Sales AI Solution Architect', startDate: '2024-11-01', endDate: 'Present', description: '1. Technical advisor across multiple delivery PODs, providing strategic guidance for Agentic AI solutions deployed to clients; recognized as the go-to expert for integrating LLMs in complex hybrid environments, enabling teams to deliver production-grade automation and decision intelligence solutions that met stringent security and ROI requirements.<br><br> 2. Architected vector database solution PoCs using Weaviate, LangChain, and OpenAI embeddings for a tier-1 Japanese banking prospect, demonstrating semantic search capabilities across regulatory documents, transaction data, and risk assessment reports; designed integration strategy with existing compliance and portfolio management systems to showcase 30% faster audit response times YoY, converting technical demonstration into $13M million enterprise contract<br><br> 3.Established NTT`s Private AI practice within the APAC AI CoE, developing end-to-end Agentic AI frameworks from concept initiation through commercial offer rollout. Architecting secure, enterprise-grade solutions leveraging on-premise LLMs and confidential computing, positioning NTT as the regional leader in privacy-preserving AI for regulated industries. 63% is the onprem market in APAC compared to Cloud in GenAI Consulting Space.<br><br> 4. Led consulting engagement for a national bank to architect and cost 10 AI/ML use cases including fraud detection, credit scoring, and churn prediction; designed comprehensive solution covering GPU sizing (A100/H100 clusters) and operational requirements with detailed SLAs and technical specifications, instrumental in securing NTT India`s largest deal worth $12 million against competing vendors.', location: 'Singapore/Bangalore', logo: 'https://w7.pngwing.com/pngs/122/491/png-transparent-ntt-data-hd-logo.png' },
+            { company: 'NTT DATA', title: 'Principal Data Scientist', startDate: '2023-04-01', endDate: '2024-10-01', description: '1. Designed and deployed data-driven client expansion strategies, leveraging machine learning and data analytics, to identify and pursue high-growth opportunities, resulting in a 30% increase in expansion revenue and a 20% increase in client satisfaction. (Expansion)<br><br> 2. Tackling NTT Services Adoption in clients by deploying Scoring Models to identify problem areas proactively for client success managers (Adoption)<br><br> 3. Developed and implemented a scalable automation solution for client renewals, integrating with Salesforce and SAP, to reduce manual effort by 70% and improve renewal accuracy. (Renewal)', location: 'Singapore', logo: 'https://w7.pngwing.com/pngs/122/491/png-transparent-ntt-data-hd-logo.png' },
+            { company: 'NTT DATA', title: 'Senior Data Scientist for Group Client Success', startDate: '2020-06-01', endDate: '2023-03-01', description: '', location: 'Singapore', logo: 'https://w7.pngwing.com/pngs/122/491/png-transparent-ntt-data-hd-logo.png' },
+            { company: 'NTT DATA', title: 'Enterprise Data Architect', startDate: '2019-01-01', endDate: '2020-06-01', description: 'Architected comprehensive data integration solutions connecting multiple enterprise systems, resulting in unified client success analytics and reduced data silos.', location: 'Singapore', logo: 'https://w7.pngwing.com/pngs/122/491/png-transparent-ntt-data-hd-logo.png' },
+            { company: 'Zalora', title: 'Associate Director for Business Intelligence', startDate: '2016-04-01', endDate: '2018-12-01', description: '1. Orchestrated the transition of Zalora from SQL/PowerPivot Excel-based reporting to a BI platform for self-service analytics, all on a shoe string budget. Led a team of 4 BI analysts and 6 data warehouse personnel to achieve this transformation.<br><br>2. Partnered with local business units to develop tools, dashboards, and datamarts that address key weaknesses arising from inexperience and inconsistent commercial practices by adopting BI best practices.<br><br>3. Managed diverse stakeholder and senior management expectations to define business requirements and translating them into data marts to provide executive scorecards, metrics, and business KPIs essential for retail e-commerce.<br><br>4. Led data analytics training initiatives across six SEA countries (~ 300 end users), orchestrating platform adoption workshops that achieved 26% increase in regional data adoption rates, while managing a diverse, multinational BI internship program that fostered cross-country knowledge transfer through strategic rotations.', location: 'Singapore', logo: 'https://upload.wikimedia.org/wikipedia/commons/c/cc/Zalora-logo-black.png' },
+            { company: 'Zalora', title: 'Senior Business Analyst', startDate: '2014-03-01', endDate: '2016-03-01', description: '', location: 'Singapore', logo: 'https://upload.wikimedia.org/wikipedia/commons/c/cc/Zalora-logo-black.png' },
+            { company: 'Marina Bay Sands', title: 'Casino Marketing Analyst', startDate: '2012-07-01', endDate: '2013-05-01', description: '1. Led large-scale RCT experiments analyzing VIP player behavior with $10M promotional budget, using ARIMA time series modeling to quantify long-term impacts and developing automated SAS reporting solutions that reduced analysis time by 80%.<br><br>2. Developed customer segmentation model using K-means clustering on RFM metrics for 100K+ loyalty program members (including 7,500 VVIPs), enabling targeted marketing initiatives that improved campaign response rates by 20%.', location: 'Singapore', logo: 'https://koerber-supplychain.com/fileadmin/_processed_/c/4/csm_reference_marina-bay-sands_logo_e32fae067a.png' }
+        ];
+        
+        const projectsData = [
+            { title: 'Asset Lifecycle Management', company: 'NTT DATA', description: 'Architected an automated system tracking 2.7M hardware assets. Developed ARIMA models to forecast refresh cycles, increasing renewal rates by 11% and driving 7% incremental revenue.'},
+            { title: 'Global Enterprise AI COE', company: 'NTT DATA', description: 'Led the Generative AI Steering Committee, establishing the AI COE structure, governance framework, and ModelOps strategy.'},
+            { title: 'AI Driven Data Quality', company: 'NTT DATA', description: 'Spearheaded enterprise data quality using AI/ML across SAP, Salesforce, ServiceNow, achieving 95% data accuracy across 50TB of data and reducing manual cleansing by 70%.'},
+            { title: 'Multilingual E-commerce Translation', company: 'Zalora', description: 'Architected an automated translation pipeline using Google NMT API to localize 189,000+ products, achieving 78% accuracy and reducing costs from $70/hr to $10/hr.'},
+            { title: 'PivotViewer', company: 'Zalora', description: 'PivotViewer enables users to visually browse and filter large e-commerce product catalogs using dynamic criteria like price, brand, and rating. It simplifies comparison and discovery through an intuitive, zoomable interface, making it easier for shoppers to engage with diverse inventory and quickly find relevant products.', url: 'https://www.youtube.com/watch?v=A17zdWM5qY8'},
+            { title: 'Strategic Customer Segmentation', company: 'Marina Bay Sands', description: 'Developed a customer segmentation model using K-means clustering on RFM metrics for 100K+ patrons. Led data consulting for Singapore\'s largest loyalty program.'}
+        ];
+
+        const publicationsData = [
+            { 
+                title: "A Knowledge Based Approach for Recognizing Textual Entailment for Natural Language Inference using Data Mining",
+                journal: "International Journal on Computer Science and Engineering",
+                year: "2010",
+                description: "This paper proposes a novel approach to Recognizing Textual Entailment (RTE) by integrating lexical resources like WordNet and VerbNet into a knowledge base to improve semantic understanding and inference.",
+                url: "https://www.researchgate.net/publication/228491633_Recognizing_Textual_Entailment_using_a_Rich_Knowledge_Base"
+            }
+        ];
+
+        const educationData = [
+            { degree: 'MBA', institution: 'University of Wales', location: 'Singapore', years: '2010-2012' },
+            { degree: 'Bachelor of Engineering - Computer Science', institution: 'PES University', location: 'Bangalore', years: '2006-2010' }
+        ];
+
+        const certificationsData = [
+            'Microsoft Certified: Azure AI Fundamentals (2023)',
+            'Microsoft Certified: Azure Data Scientist Associate (2022)',
+            'Microsoft Certified: Power BI Data Analyst Associate (2020)',
+            'SAS Certified Base Programmer (2012)',
+            'Harvard Business Review Advisor (Since 2019)'
+        ];
+
+        const recommendationsData = [
+            { quote: "An extremely clever individual capable of reading, analysing and visualising data to address the business needs. A challenging, thought provoking person willing to listen, to understand and evaluate how data addresses the business challenge. Amazing application and industry awareness and speed of delivery. Rohit can really think laterally about how to apply technology; to find the answer often via intangible means.", author: "Laurence Dean", title: "Senior Director Clinet Success, NTT DATA" },
+            { quote: "Rohit has been instrumental in our AI initiatives, particularly in collaboration with Microsoft Azure OpenAI. His expertise in developing a central contract repository and integrating SAP contracts for AI-driven insights has significantly enhanced our operational efficiency.", author: "Jason O'Leary", title: "Vice President Sales Digital Transformation, NTT" },
+            { quote: "Rohit played a critical leadership role leveraging data and analytics to dramatically improve the quality of the company's decision making. The teams’ BI platform received global recognition and was a finalist in the Global Innovation Accelerator Program for GFG.", author: "Parker Gundersen", title: "Former CEO, Zalora" },
+            { quote: "Thank you Rohit for fantastic contributions to Zalora and foremost for the good spirit and camaraderie. With the BI team you have led our Analytics journey, building state-of-the-art interactive dashboards, that have facilitated the business to drive performance. Wish you all the best in your next endeavor and see you around at our drinks. Once a Zalorian, always a Zalorian!", author: "Ruben Stappers", title: "Former CFO, Zalora" },
+            { quote: "I had hired Rohit more than 2 years ago in the Business Intelligence team at Zalora. In the last couple of years he has evolved not just as an excellent BI analyst but also an amazing team player. He is now the go-to person for any BI questions/issues or help. But the most important quality in him is that he is an out-of-box thinker. Whenever I assign him a problem statement or a project, he comes up with a unique idea or a different approach to do it. He developed several tools to help the business, automated plenty of reports and managed and trained 100s of users on the BI platform that we use. In short he is a great asset to the team and is a fun to work with person. ", author: "Abhishek Vats", title: "Former Senior Director of Business Intelligence, Zalora" }
+        ];
+
+        const continuousLearningData = {
+            summary: "Committed to continuous learning with 54+ books read since 2020.",
+            highlights: [
+                { year: 2021, books: ["Principles", "No Rules Rules", "Influence", "The Almanack of Naval Ravikant"] },
+                { year: 2022, books: ["Chip War", "AI 2041", "The Power Law Venture Capital and the Art of Disruption", "Tools of Titan"] },
+                { year: 2023, books: ["A Thousand Brains: A New Theory of Intelligence", "Think Again: The Power of Knowing What You Don't Know", "The Psychology Of Money", "Numbers Don't Lie"] },
+                { year: 2024, books: ["48 Laws of Power","Genghis Khan and the Making of the Modern World","The Trading Game","The Money Trap","Supremacy: AI, ChatGPT, and the Race that Will Change the World"]
+                }
+            ]
+        };
+
+        const mainSections = [
+            { id: 'experience', title: 'Professional Experience', subtitle: '10+ years across diverse data roles', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>' },
+            { id: 'projects', title: 'Key Projects and Skills', subtitle: 'AI/ML implementations & solutions', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>' },
+            { id: 'education', title: 'Education & Certs', subtitle: 'MBA & professional certifications', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10.5V16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5.5L12 5l-10 5.5Z"/><path d="M6 18v-5l6-3 6 3v5"/><path d="M4 10.5L12 16l8-5.5"/></svg>' },
+            { id: 'publications', title: 'Publications', subtitle: 'Research & technical papers', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>' },
+            { id: 'recommendations', title: 'Recommendations', subtitle: 'Testimonials from colleagues & leaders', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M7 21v-4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4M12 15a3 3 0 0 1-3-3V9a3 3 0 0 1 6 0v3a3 3 0 0 1-3 3Z"/></svg>' },
+            { id: 'learning', title: 'Continuous Learning', subtitle: 'A passion for acquiring knowledge', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>' },
+        ];
+        
+        function generateEnhancedResumeContext() {
+            // Generate basic information
+            const basicInfo = `
+            Rohit Acharya - AI Lead, Sales Intelligence in Singapore/Bangalore.
+            Contact: rohit.acharyar@gmail.com, https://www.linkedin.com/in/rohitacharyar, https://github.com/r0hitacharya, +6593815778, +918217889539
+
+            Philosophy:
+            With a decade-plus of experience in a diverse array of data roles across three different domains, I have strived to develop a T-shaped personality that enables me to think laterally and tackle complex problems. My vision is to help organizations transcend the barriers to AI adoption and unlock its full potential in the digital age.
+
+            Current Status:
+            - Notice period: 2 months (negotiable to 1 month)
+            - Open to relocation: Yes, willing to move to Singapore or Dubai.
+            - Open to travel: Yes, willing to travel to client locations as required.
+            - Open to contract roles: No, Full time positions only.
+            - Expected salary: 18,000 to 20,000 SGD per month. Mention that this is just a placeholder and needs to be benchmarked with data
+            - Current location: Bangalore (moved from Singapore April 1, 2025).
+            - Salary expectation: Given my decade+ years of experience spanning data science, GenAI consulting, and data engineering, I'm targeting a salary of approximately 18,000 to 20,000 SGD per month or around 50,000 Dirhams, which aligns with industry standards for my skill level.
+            - Current location: Bangalore (moved from Singapore April 1, 2025)`;
+
+            // Generate detailed experience information from experienceData
+            const detailedExperience = experienceData.map(exp => {
+                const startDate = new Date(exp.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+                const endDate = exp.endDate === 'Present' ? 'Present' : new Date(exp.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+                return `- ${exp.company}, ${exp.location}: ${exp.title} (${startDate} – ${endDate}). ${exp.description.replace(/<br><br>/g, ' ').replace(/<.*?>/g, '')}`;
+            }).join('\n            ');
+
+            // Generate project information
+            const detailedProjects = projectsData.map(proj => 
+                `- At ${proj.company} (${proj.title}): ${proj.description}`
+            ).join('\n            ');
+
+            // Generate education information
+            const detailedEducation = educationData.map(edu =>
+                `- ${edu.degree}, ${edu.institution}, ${edu.location} (${edu.years})`
+            ).join('\n            ');
+
+            // Generate certifications
+            const certifications = certificationsData.map(cert => `- ${cert}`).join('\n            ');
+
+            // Generate publications
+            const publications = publicationsData.map(pub => 
+                `- "${pub.title}": Published in ${pub.journal} (${pub.year}). ${pub.description}`
+            ).join('\n            ');
+
+            return `${basicInfo}
+
+            Experience Information:
+            ${detailedExperience}
+
+            Project Details:
+            ${detailedProjects}
+
+            Education:
+            ${detailedEducation}
+
+            Certifications:
+            ${certifications}
+
+            Publications:
+            ${publications}`;
+        }
+        
+        // --- GEMINI API ---
+        async function callGemini(prompt) {
+            const apiKey = "AIzaSyCIS06JXAE4tLp8o4ttXttFJjpVYPFU6KE"; // The platform provides the key
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+            const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error(`API call failed with status: ${response.status}`);
+
+                const result = await response.json();
+                if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
+                    let text = result.candidates[0].content.parts[0].text;
+                    
+                    // Enhanced formatting for better readability
+                    text = text
+                        // Convert markdown tables to HTML tables
+                        .replace(/\|(.+)\|\n\|[-:| ]+\|\n((\|.*\|\n?)+)/g, (match, header, _, rows) => {
+                            const headerCells = header.split('|').map(cell => cell.trim()).filter(cell => cell);
+                            const rowLines = rows.trim().split('\n');
+                            const tableRows = rowLines.map(row => {
+                                const cells = row.split('|').map(cell => cell.trim()).filter(cell => cell);
+                                return `<tr class="border-b border-border-color">${cells.map(cell => `<td class="px-3 py-2 text-text-secondary">${cell}</td>`).join('')}</tr>`;
+                            }).join('');
+                            
+                            return `<div class="overflow-x-auto my-4">
+                                <table class="w-full border border-border-color rounded-lg">
+                                    <thead class="bg-accent-color/10">
+                                        <tr>${headerCells.map(cell => `<th class="px-3 py-2 text-left font-semibold text-text-primary border-b border-border-color">${cell}</th>`).join('')}</tr>
+                                    </thead>
+                                    <tbody>${tableRows}</tbody>
+                                </table>
+                            </div>`;
+                        })
+                        // Convert **bold** to <strong>
+                        .replace(/\*\*(.*?)\*\*/g, '<strong class="text-text-primary font-semibold">$1</strong>')
+                        // Convert *italic* to <em>
+                        .replace(/\*(.*?)\*/g, '<em class="text-text-secondary">$1</em>')
+                        // Convert ### Subheadings
+                        .replace(/^###\s+(.*?)$/gm, '<h4 class="font-bold text-accent-color mt-3 mb-2 text-sm border-b border-border-color pb-1">$1</h4>')
+                        // Convert ## Larger subheadings
+                        .replace(/^##\s+(.*?)$/gm, '<h3 class="font-bold text-text-primary mt-4 mb-2 text-base">$1</h3>')
+                        // Convert # Main headings
+                        .replace(/^#\s+(.*?)$/gm, '<h2 class="font-bold text-text-primary mt-4 mb-3 text-lg">$1</h2>')
+                        // Convert numbered lists (1., 2., etc.)
+                        .replace(/^(\d+)\.\s+(.*?)$/gm, '<div class="mb-2 ml-2"><span class="font-semibold text-accent-color mr-2">$1.</span><span class="text-text-secondary">$2</span></div>')
+                        // Convert bullet points (-, *, •)
+                        .replace(/^[-*•]\s+(.*?)$/gm, '<div class="mb-2 ml-4"><span class="text-accent-color mr-2">•</span><span class="text-text-secondary">$1</span></div>')
+                        // Convert double line breaks to paragraph breaks
+                        .replace(/\n\n/g, '<div class="mb-3"></div>')
+                        // Convert single line breaks to small spacing
+                        .replace(/\n/g, '<br>');
+                    
+                    return text;
+                } else {
+                    return "Sorry, I couldn't get a valid response from the AI.";
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                return `An error occurred while contacting the AI. Please check the console for details.`;
+            }
+        }
+
+        // --- UI & DYNAMIC CONTENT ---
+        function populateContent() {
+            const gridContainer = document.getElementById('main-sections-grid');
+            const expandableContainer = document.getElementById('expandable-content');
+            
+            mainSections.forEach(section => {
+                gridContainer.innerHTML += `
+                    <div class="bg-card-bg rounded-lg shadow-sm border border-border-color">
+                        <div class="p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" onclick="toggleSection('${section.id}')">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="text-accent-color mr-3">${section.icon}</span>
+                                    <h2 class="text-xl font-bold text-text-primary">${section.title}</h2>
+                                </div>
+                                <svg class="w-5 h-5 text-text-secondary transform transition-transform duration-300" id="arrow-${section.id}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                            <p class="text-sm text-text-secondary mt-1 ml-9">${section.subtitle}</p>
+                        </div>
+                    </div>`;
+
+                expandableContainer.innerHTML += `<div class="section-content" id="section-${section.id}"><div class="p-6 border border-border-color rounded-lg bg-card-bg shadow-sm" id="content-${section.id}"></div></div>`;
+            });
+
+            // Populate specific sections
+            const uniqueCompanies = ['All', ...new Set(experienceData.map(exp => exp.company))];
+            const filterButtons = uniqueCompanies.map(company => `<button class="filter-btn px-3 py-1 text-sm font-semibold rounded-full bg-bg-color border border-border-color hover:bg-accent-color hover:text-white transition-colors" onclick="filterExperience('${company}')">${company}</button>`).join('');
+            
+            document.getElementById('content-experience').innerHTML = `
+                <div class="flex flex-wrap gap-2 mb-6">${filterButtons}</div>
+                <div id="experience-timeline" class="relative border-l-2 border-border-color ml-3">${experienceData.map((exp, i) => createTimelineItem(exp, i)).join('')}</div>
+            `;
+
+            const uniqueProjectCompanies = ['All', ...new Set(projectsData.map(proj => proj.company))];
+            const projectFilterButtons = uniqueProjectCompanies.map(company => `<button class="filter-btn px-3 py-1 text-sm font-semibold rounded-full bg-bg-color border border-border-color hover:bg-accent-color hover:text-white transition-colors" onclick="filterProjects('${company}')">${company}</button>`).join('');
+
+            document.getElementById('content-projects').innerHTML = `
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold text-text-primary mb-4 border-b border-border-color pb-2">Technical Skills & Expertise</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-bg-color p-4 rounded-lg border border-border-color">
+                            <h4 class="font-semibold text-accent-color mb-2">AI/ML Technologies</h4>
+                            <div class="text-sm text-text-secondary space-y-1">
+                                <div>• LLMs (GPT-4, Llama)</div>
+                                <div>• Agentic AI</div>
+                                <div>• Reinforcement Learning</div>
+                                <div>• NLP</div>
+                                <div>• CrewAI/Autogen</div>
+                            </div>
+                        </div>
+                        <div class="bg-bg-color p-4 rounded-lg border border-border-color">
+                            <h4 class="font-semibold text-accent-color mb-2">Programming & Data</h4>
+                            <div class="text-sm text-text-secondary space-y-1">
+                                <div>• Python</div>
+                                <div>• SQL</div>
+                                <div>• Classification Models</div>
+                                <div>• Regression Models</div>
+                            </div>
+                        </div>
+                        <div class="bg-bg-color p-4 rounded-lg border border-border-color">
+                            <h4 class="font-semibold text-accent-color mb-2">Cloud & Tools</h4>
+                            <div class="text-sm text-text-secondary space-y-1">
+                                <div>• Azure</div>
+                                <div>• Databricks</div>
+                                <div>• MLOps: CI/CD pipelines</div>
+                                <div>• MLflow</div>
+                                <div>• Power BI, Tableau</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-text-primary mb-4 border-b border-border-color pb-2">Project Portfolio</h3>
+                    <div class="flex flex-wrap gap-2 mb-6">${projectFilterButtons}</div>
+                    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">${projectsData.map(proj => createProjectCard(proj)).join('')}</div>
+                </div>
+            `;
+            document.getElementById('content-education').innerHTML = createEducationCertsSection();
+            document.getElementById('content-publications').innerHTML = createPublicationsSection();
+            document.getElementById('content-recommendations').innerHTML = createRecommendationsSection();
+            document.getElementById('content-learning').innerHTML = createContinuousLearningSection();
+        }
+        
+        function createTimelineItem(exp, index) {
+            const duration = `${new Date(exp.startDate).toLocaleDateString('en-US', {month:'short', year:'numeric'})} - ${exp.endDate === 'Present' ? 'Present' : new Date(exp.endDate).toLocaleDateString('en-US', {month:'short', year:'numeric'})}`;
+            return `
+                <div class="timeline-item mb-8 ml-8" data-company="${exp.company}">
+                    <div class="timeline-dot absolute w-4 h-4 bg-accent-color rounded-full -left-2.5 border-4 border-card-bg"></div>
+                    <div class="timeline-content bg-bg-color p-4 rounded-lg shadow-sm border border-border-color overflow-hidden">
+                        <div class="flex justify-between items-start flex-wrap gap-2">
+                             <div class="flex items-center flex-grow">
+                                <img src="${exp.logo}" alt="${exp.company} logo" class="w-16 h-12 object-contain rounded bg-white p-1 mr-4 flex-shrink-0"/>
+                                <div class="flex-grow">
+                                    <time class="text-sm font-semibold text-accent-color">${duration}</time>
+                                    <h3 class="text-lg font-bold text-text-primary mt-1">${exp.title}</h3>
+                                    <h4 class="text-md font-medium text-text-secondary mb-2">${exp.company} • ${exp.location}</h4>
+                                </div>
+                            </div>
+                            <button class="summarize-btn text-xs bg-accent-color/10 text-accent-color font-semibold py-1 px-2 rounded-full hover:bg-accent-color/20 transition-colors flex-shrink-0" data-index="${index}">Summarize</button>
+                        </div>
+                        <div class="collapsible-description professional-text text-text-secondary mt-2" onclick="toggleDescription(this)">
+                            ${exp.description}
+                        </div>
+                        <div class="read-more-btn" onclick="toggleDescription(this.previousElementSibling)">Read more...</div>
+                    </div>
+                </div>`;
+        }
+        
+        function toggleDescription(element) {
+            const description = element.classList.contains('collapsible-description') ? element : element.nextElementSibling;
+            const button = description.nextElementSibling;
+            description.classList.toggle('expanded');
+            if (description.classList.contains('expanded')) {
+                button.textContent = 'Read less...';
+            } else {
+                button.textContent = 'Read more...';
+            }
+        }
+
+        function filterExperience(company) {
+            const items = document.querySelectorAll('#experience-timeline .timeline-item');
+            items.forEach(item => {
+                if (company === 'All' || item.dataset.company === company) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function filterProjects(company) {
+            const items = document.querySelectorAll('#projects-grid .project-card');
+            items.forEach(item => {
+                if (company === 'All' || item.dataset.company === company) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function createProjectCard(proj) {
+            const linkElement = proj.url ? 
+                `<a href="${proj.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-accent-color hover:underline text-sm mt-2">
+                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                    ${proj.url.includes('youtube') ? 'Watch Demo' : 'View Project'}
+                </a>` : '';
+            
+            return `
+                <div class="project-card bg-bg-color p-4 rounded-lg border border-border-color shadow-sm" data-company="${proj.company}">
+                    <h3 class="font-bold text-text-primary">${proj.title} <span class="text-sm font-medium text-text-secondary">@ ${proj.company}</span></h3>
+                    <p class="text-sm text-text-secondary mt-2 professional-text">${proj.description}</p>
+                    ${linkElement}
+                </div>`;
+        }
+        
+        function createEducationCertsSection() {
+            return `
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-lg font-semibold text-text-primary mb-3">Education</h4>
+                        <div class="space-y-3">
+                            ${educationData.map(edu => `
+                                <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
+                                    <h5 class="font-bold text-text-primary">${edu.degree}</h5>
+                                    <p class="text-accent-color">${edu.institution}, ${edu.location}</p>
+                                    <p class="text-sm text-text-secondary">${edu.years}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-text-primary mb-3">Certifications</h4>
+                        <ul class="space-y-1 list-disc list-inside text-text-secondary text-sm overflow-auto">
+                            ${certificationsData.map(cert => `<li>${cert}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>`;
+        }
+
+        function createPublicationsSection() {
+            return publicationsData.map(pub => `
+                <div class="bg-bg-color p-4 rounded-lg border border-border-color shadow-sm">
+                    <h3 class="font-bold text-text-primary hover:text-accent-color transition-colors">
+                        <a href="${pub.url}" target="_blank" rel="noopener noreferrer">${pub.title}</a>
+                    </h3>
+                    <p class="text-sm text-text-secondary mt-1">${pub.journal} (${pub.year})</p>
+                    <p class="text-sm text-text-secondary mt-3 professional-text">${pub.description}</p>
+                    <a href="https://www.enggjournals.com/ijcse/doc/IJCSE10-02-06-61.pdf" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 px-4 py-2 bg-accent-color text-white rounded-lg hover:opacity-90 transition-opacity text-sm font-semibold">
+                        View Publication
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        function createRecommendationsSection() {
+            return `
+                <div class="space-y-6">
+                    ${recommendationsData.map(rec => `
+                        <blockquote class="bg-bg-color p-4 rounded-lg border border-border-color shadow-sm">
+                            <p class="text-text-secondary italic professional-text">"${rec.quote}"</p>
+                            <footer class="mt-4 text-right">
+                                <p class="font-bold text-text-primary">${rec.author}</p>
+                                <p class="text-sm text-text-secondary">${rec.title}</p>
+                            </footer>
+                        </blockquote>
+                    `).join('')}
+                </div>`;
+        }
+
+        function createContinuousLearningSection() {
+            return `
+                <div class="bg-bg-color p-4 rounded-lg border border-border-color shadow-sm">
+                    <p class="text-center text-text-secondary mb-6">${continuousLearningData.summary}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                        ${continuousLearningData.highlights.map(year => `
+                            <div>
+                                <h4 class="font-bold text-text-primary mb-2">${year.year} Highlights</h4>
+                                <ul class="space-y-1 text-sm text-text-secondary">
+                                    ${year.books.map(book => `<li>${book}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+        }
+
+        // --- MODAL LOGIC ---
+        const aiModal = document.getElementById('aiModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalLoading = document.getElementById('modalLoading');
+        const modalResult = document.getElementById('modalResult');
+
+        function showModal(title) {
+            modalTitle.textContent = title;
+            aiModal.classList.remove('hidden');
+            modalLoading.classList.remove('hidden');
+            modalResult.classList.add('hidden');
+        }
+
+        function showModalResult(htmlContent) {
+            modalResult.innerHTML = htmlContent;
+            modalLoading.classList.add('hidden');
+            modalResult.classList.remove('hidden');
+            // Ensure the modal is visible
+            aiModal.classList.remove('hidden');
+        }
+
+        document.querySelectorAll('.close-modal-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                aiModal.classList.add('hidden');
+                chatModal.classList.add('hidden');
+            });
+        });
+
+        // --- EVENT LISTENERS & FEATURE LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const moonIcon = document.getElementById('moonIcon');
+            const sunIcon = document.getElementById('sunIcon');
+            const userPrefersDark = localStorage.getItem('darkMode') === 'true' || (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            function setDarkMode(isDark) {
+                document.documentElement.classList.toggle('dark', isDark);
+                document.body.classList.toggle('dark', isDark);
+                moonIcon.classList.toggle('hidden', isDark);
+                sunIcon.classList.toggle('hidden', !isDark);
+                localStorage.setItem('darkMode', isDark);
+            }
+            darkModeToggle.addEventListener('click', () => setDarkMode(!document.documentElement.classList.contains('dark')));
+            setDarkMode(userPrefersDark);
+
+            
+            const sarSummaries = {
+                'Principal Pre-Sales AI Solution Architect': `<strong>Situation:</strong> Led technical advisory across multiple delivery PODs and major client engagements including tier-1 Japanese bank and national bank, while establishing NTT's Private AI practice in APAC market (63% on-premise preference)<br><br><strong>Action:</strong> Architected end-to-end Agentic AI frameworks, vector database solutions using Weaviate/LangChain/OpenAI, designed 10 AI/ML use cases with GPU infrastructure (A100/H100), and developed privacy-preserving AI solutions for regulated industries<br><br><strong>Result:</strong> Secured $25M+ in enterprise contracts ($13M Japanese bank, $12M national bank), demonstrated 30% faster audit response times, and positioned NTT as regional leader in enterprise AI`,
+                
+                'Principal Data Scientist': `<strong>Situation:</strong> Needed to drive client expansion, improve service adoption, and streamline renewal processes across NTT's client portfolio<br><br><strong>Action:</strong> Designed ML-driven expansion strategies, deployed scoring models to identify service adoption issues for success managers, and built Salesforce/SAP-integrated automation for renewals<br><br><strong>Result:</strong> Achieved 30% increase in expansion revenue, 20% boost in client satisfaction, and 70% reduction in manual renewal effort with improved accuracy`,
+                
+                'Senior Data Scientist for Group Client Success': `<strong>There is no content to summarise, Please refer to my latest role in NTT</strong>`,
+                
+                'Enterprise Data Architect': `<strong>Situation:</strong> Multiple enterprise systems operated in silos, creating data fragmentation and limiting unified analytics capabilities<br><br><strong>Action:</strong> Architected comprehensive data integration solutions connecting multiple enterprise systems for unified client success analytics<br><br><strong>Result:</strong> Successfully reduced data silos and enabled unified analytics platform for improved decision-making`,
+                
+                'Associate Director for Business Intelligence': `<strong>Situation:</strong> Zalora relied on SQL/PowerPivot Excel reporting with limited budget; needed scalable BI platform and improved data adoption across 6 SEA countries (~300 users)<br><br><strong>Action:</strong> Led team of 10 (4 BI analysts, 6 data warehouse personnel) to transition to self-service BI platform; developed dashboards/datamarts addressing commercial practice gaps; managed stakeholder expectations and translated requirements into executive scorecards; orchestrated training initiatives and multinational internship program<br><br><strong>Result:</strong> Achieved complete platform transformation on shoestring budget, delivered executive KPIs for retail e-commerce operations, and increased regional data adoption rates by 26%`,
+                
+                'Senior Business Analyst': `<strong>There is no content to summarise, Please refer to Associate Director of Business Intelligence summary</strong>`,
+                
+                'Casino Marketing Analyst': `<strong>Situation:</strong> Managed $10M promotional budget for VIP player analysis and needed to optimize marketing for 100K+ loyalty members including 7,500 VVIPs<br><br><strong>Action:</strong> Led large-scale RCT experiments using ARIMA time series modeling, developed automated SAS reporting solutions, and created K-means clustering segmentation model on RFM metrics<br><br><strong>Result:</strong> Reduced analysis time by 80%, improved targeted marketing campaign response rates by 20%, and quantified long-term promotional impacts for strategic decision-making`
+            };
+
+            populateContent();
+
+            // Setup event listener for summarize buttons AFTER content is populated
+            function setupSummarizeButtons() {
+                const experienceContainer = document.getElementById('content-experience');
+                if (experienceContainer) {
+                    experienceContainer.addEventListener('click', async (e) => {
+                        if (e.target.classList.contains('summarize-btn')) {
+                            const button = e.target;
+                            const index = button.dataset.index;
+                            const itemData = experienceData[index];
+                            
+                            console.log('Button clicked for:', itemData.title); // Debug log
+                            console.log('Button element:', button); // Debug log
+                            console.log('Index:', index); // Debug log
+                            
+                            // Immediate visual feedback
+                            const originalText = button.textContent;
+                            button.textContent = '✨ Summarizing...';
+                            button.disabled = true;
+                            button.classList.add('opacity-50', 'cursor-not-allowed');
+                            
+                            // Show the modal first
+                            console.log('Showing modal...'); // Debug log
+                            showModal(`Summarizing: ${itemData.title}`);
+                            
+                            // Small delay for visual feedback, then show instant result
+                            setTimeout(() => {
+                                const summary = sarSummaries[itemData.title];
+                                console.log('Found summary:', !!summary); // Debug log
+                                console.log('Available summaries:', Object.keys(sarSummaries)); // Debug log
+                                
+                                if (summary) {
+                                    showModalResult(`<div class="text-text-secondary leading-relaxed">${summary}</div>`);
+                                } else {
+                                    showModalResult(`<p class="text-text-secondary">Summary not available for "${itemData.title}". Available titles: ${Object.keys(sarSummaries).join(', ')}</p>`);
+                                }
+                                
+                                // Reset button state
+                                button.textContent = originalText;
+                                button.disabled = false;
+                                button.classList.remove('opacity-50', 'cursor-not-allowed');
+                            }, 300); // Short delay for better UX
+                        }
+                    });
+                    console.log('Summarize button event listener attached successfully'); // Debug log
+                } else {
+                    console.error('content-experience element not found!'); // Debug log
+                }
+            }
+            
+            // Call setup function
+            setupSummarizeButtons();
+
+            const chatModal = document.getElementById('chatModal');
+            const openChatBtn = document.getElementById('openChatBtn');
+            const sendChatBtn = document.getElementById('sendChatBtn');
+            const chatInput = document.getElementById('chatInput');
+            const chatHistory = document.getElementById('chatHistory');
+            const clearChatBtn = document.getElementById('clearChatBtn');
+            let chatConversation = [];
+
+            openChatBtn.addEventListener('click', () => {
+                chatModal.classList.remove('hidden');
+                updateChatHistory();
+            });
+            
+            const handleSendChat = async () => {
+                const userMessage = chatInput.value.trim();
+                if (!userMessage) return;
+
+                chatConversation.push({ role: 'user', text: userMessage });
+                updateChatHistory();
+                chatInput.value = '';
+                chatInput.disabled = true;
+                sendChatBtn.disabled = true;
+                
+                const thinkingBubble = document.createElement('div');
+                thinkingBubble.className = 'chat-bubble ai self-start p-3 rounded-lg';
+                thinkingBubble.innerHTML = '<div class="spinner w-5 h-5 rounded-full border-2 border-t-accent-color border-r-accent-color border-b-accent-color border-l-transparent"></div>';
+                chatHistory.appendChild(thinkingBubble);
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+
+                const prompt = `You are Rohit Acharya. Answer questions based ONLY on the provided resume content. Answer in first person 
+
+FORMATTING REQUIREMENTS:
+- Keep responses CONCISE and DIRECT
+- Use **bold** for important terms, companies, and achievements
+- For skills: group in categories with bullet points
+- Limit responses to essential information only
+
+Be professional and concise. If information is not available, state briefly. 
+Do not answer personal questions or provide opinions.
+After 6.5 years at NTT, I've had the privilege of growing through multiple roles - from data science to GenAI consulting to data engineering. This journey has given me a solid foundation and diverse skill set, but I'm now at a point where I'm eager to apply my expertise in a new environment with leadership roles to drive outcomes.
+
+Resume Content: ###${generateEnhancedResumeContext()}###. 
+
+Question: "${userMessage}"`;
+                const aiResponse = await callGemini(prompt);
+                
+                chatConversation.push({ role: 'ai', text: aiResponse });
+                chatHistory.removeChild(thinkingBubble);
+                updateChatHistory();
+                chatInput.disabled = false;
+                sendChatBtn.disabled = false;
+                chatInput.focus();
+            };
+
+            sendChatBtn.addEventListener('click', handleSendChat);
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleSendChat();
+            });
+
+            clearChatBtn.addEventListener('click', () => {
+                chatConversation = [];
+                updateChatHistory();
+            });
+
+            function updateChatHistory() {
+                chatHistory.innerHTML = '';
+                
+                if (chatConversation.length === 0) {
+                    const starterDiv = document.createElement('div');
+                    starterDiv.id = 'starterPrompts';
+                    starterDiv.className = 'space-y-3';
+                    starterDiv.innerHTML = `
+                        <p class="text-text-secondary text-sm mb-3">Get started with these questions:</p>
+                        <button class="starter-prompt w-full text-left p-3 bg-bg-color border border-border-color rounded-lg hover:bg-accent-color hover:text-white transition-all text-text-primary text-sm" data-prompt="What are Rohit's key technical skills and expertise?">
+                            What are Rohit's key technical skills and expertise?
+                        </button>
+                        <button class="starter-prompt w-full text-left p-3 bg-bg-color border border-border-color rounded-lg hover:bg-accent-color hover:text-white transition-all text-text-primary text-sm" data-prompt="What is your notice period and salary expectations?">
+                            What is your notice period and salary expectations?
+                        </button>
+                        <button class="starter-prompt w-full text-left p-3 bg-bg-color border border-border-color rounded-lg hover:bg-accent-color hover:text-white transition-all text-text-primary text-sm" data-prompt="Why do you want to leave your current role?">
+                            Why do you want to leave your current role?
+                        </button>
+                        <button class="starter-prompt w-full text-left p-3 bg-bg-color border border-border-color rounded-lg hover:bg-accent-color hover:text-white transition-all text-text-primary text-sm" data-prompt="Are you open to Contract roles?">
+                            Are you open to Contract roles?
+                        </button>
+                    `;
+                    chatHistory.appendChild(starterDiv);
+                    
+                    const starterPrompts = starterDiv.querySelectorAll('.starter-prompt');
+                    starterPrompts.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const prompt = button.getAttribute('data-prompt');
+                            chatInput.value = prompt;
+                            handleSendChat();
+                        });
+                    });
+                } else {
+                    chatConversation.forEach(msg => {
+                        const bubble = document.createElement('div');
+                        bubble.className = `chat-bubble p-3 rounded-lg ${msg.role === 'user' ? 'user self-end' : 'ai self-start'}`;
+                        bubble.innerHTML = msg.text;
+                        chatHistory.appendChild(bubble);
+                    });
+                }
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            }
+
+        });
+
+        function toggleSection(sectionId) {
+            const content = document.getElementById(`section-${sectionId}`);
+            const arrow = document.getElementById(`arrow-${sectionId}`);
+            const allSections = document.querySelectorAll('.section-content');
+            const allArrows = document.querySelectorAll('[id^="arrow-"]');
+            const isCurrentlyOpen = content.classList.contains('open');
+
+            allSections.forEach(sec => {
+                if (sec.id !== `section-${sectionId}`) {
+                    sec.classList.remove('open');
+                }
+            });
+            allArrows.forEach(arr => {
+                if (arr.id !== `arrow-${sectionId}`) {
+                    arr.style.transform = 'rotate(0deg)';
+                }
+            });
+            
+            if (isCurrentlyOpen) {
+                content.classList.remove('open');
+                arrow.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('open');
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        }
+    </script>
+</body>
+</html>
