@@ -92,8 +92,23 @@
             }
             
             .section-wrapper {
-                display: flex !important;
-                flex-direction: column !important;
+                display: contents !important;
+            }
+            
+            .section-wrapper .section-content {
+                /* When opened, span all columns for better readability */
+                grid-column: 1 / -1 !important;
+                order: 999 !important; /* Ensure it appears after all cards */
+            }
+            
+            .section-wrapper .section-content.open {
+                margin-top: 2rem !important;
+                margin-bottom: 2rem !important;
+            }
+            
+            .section-wrapper .section-content .p-6 {
+                max-width: none !important;
+                padding: 2rem !important;
             }
         }
         
@@ -225,6 +240,59 @@
                 margin-left: 0 !important;
                 padding-left: 1.5rem !important;
                 margin-bottom: 1.5rem !important;
+            }
+            
+            /* Mobile timeline content layout fixes */
+            .timeline-item .timeline-content {
+                padding: 0.75rem !important;
+            }
+            
+            /* Fix overlapping in timeline header */
+            .timeline-item .flex.justify-between {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 0.75rem !important;
+            }
+            
+            /* Timeline header content adjustments */
+            .timeline-item .flex.items-center {
+                width: 100% !important;
+                margin-bottom: 0.5rem !important;
+            }
+            
+            /* Company logo adjustments for mobile */
+            .timeline-item img {
+                width: 3rem !important;
+                height: 2.25rem !important;
+                margin-right: 0.75rem !important;
+            }
+            
+            /* Date and title adjustments */
+            .timeline-item time {
+                font-size: 0.75rem !important;
+                display: block !important;
+                margin-bottom: 0.25rem !important;
+            }
+            
+            .timeline-item h3 {
+                font-size: 1rem !important;
+                line-height: 1.2 !important;
+                margin-top: 0.25rem !important;
+                margin-bottom: 0.25rem !important;
+            }
+            
+            .timeline-item h4 {
+                font-size: 0.875rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+            
+            /* Summarize button mobile positioning */
+            .timeline-item .summarize-btn {
+                align-self: flex-end !important;
+                margin-top: 0 !important;
+                padding: 0.5rem 0.75rem !important;
+                font-size: 0.75rem !important;
+                white-space: nowrap !important;
             }
             
             /* Project cards - better mobile layout */
@@ -666,7 +734,7 @@
         
         // --- GEMINI API ---
         async function callGemini(prompt) {
-            const apiKey = "__API_KEY__";
+            const apiKey = "AIzaSyCIS06JXAE4tLp8o4ttXttFJjpVYPFU6KE"; // The platform provides the key
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
             const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
 
@@ -998,7 +1066,7 @@
             const darkModeToggle = document.getElementById('darkModeToggle');
             const moonIcon = document.getElementById('moonIcon');
             const sunIcon = document.getElementById('sunIcon');
-            const userPrefersDark = localStorage.getItem('darkMode') === 'true' || (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            const userPrefersDark = localStorage.getItem('darkMode') === 'true'; // Default to light mode
             function setDarkMode(isDark) {
                 document.documentElement.classList.toggle('dark', isDark);
                 document.body.classList.toggle('dark', isDark);
@@ -1213,13 +1281,18 @@ Question: "${userMessage}"`;
             } else {
                 content.classList.add('open');
                 arrow.style.transform = 'rotate(180deg)';
+                
+                // Smooth scroll to the expanded content after a short delay
+                // to allow the expansion animation to start
+                setTimeout(() => {
+                    content.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                        inline: 'nearest'
+                    });
+                }, 100);
             }
         }
     </script>
 </body>
 </html>
-
-
-
-
-
