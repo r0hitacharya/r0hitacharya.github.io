@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.        async function callGemini(prompt) {
-            const apiKey = "__API_KEY__"; // The platform provides the key
+            const apiKey = "AIzaSyCIS06JXAE4tLp8o4ttXttFJjpVYPFU6KE"; // The platform provides the key
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
             
             // Optimized payload for faster responses
@@ -76,6 +76,25 @@
             max-height: 3000px; /* Increased max-height */
             opacity: 1;
             margin-top: 1.5rem;
+        }
+        
+        /* Section wrapper for proper layout */
+        .section-wrapper {
+            width: 100%;
+        }
+        
+        /* Desktop grid layout */
+        @media (min-width: 769px) {
+            #main-sections-grid {
+                display: grid !important;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+                gap: 1.5rem !important;
+            }
+            
+            .section-wrapper {
+                display: flex !important;
+                flex-direction: column !important;
+            }
         }
         
         .professional-text {
@@ -156,23 +175,29 @@
                 gap: 0 !important;
             }
             
-            /* Mobile section cards - full width list style */
-            #main-sections-grid > div {
+            /* Section wrapper for mobile - stack vertically */
+            .section-wrapper {
+                display: block !important;
                 margin-bottom: 0.5rem !important;
+            }
+
+            /* Mobile section cards - full width list style */
+            .section-wrapper > div:first-child {
+                margin-bottom: 0 !important;
                 border-radius: 0.5rem !important;
                 overflow: hidden !important;
             }
             
-            #main-sections-grid .p-4 {
+            .section-wrapper .p-4 {
                 padding: 1rem !important;
             }
             
-            #main-sections-grid h2 {
+            .section-wrapper h2 {
                 font-size: 1.125rem !important;
                 font-weight: 600 !important;
             }
             
-            #main-sections-grid p {
+            .section-wrapper p {
                 font-size: 0.875rem !important;
                 margin-top: 0.25rem !important;
                 margin-left: 2rem !important;
@@ -445,12 +470,8 @@
             </section>
 
             <section class="space-y-3 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-4 sm:space-y-0 lg:gap-6" id="main-sections-grid">
-                <!-- Cards will be dynamically inserted here -->
+                <!-- Cards and their content will be dynamically inserted here -->
             </section>
-
-            <div id="expandable-content" class="mt-6">
-                <!-- Content sections will be dynamically inserted here -->
-            </div>
         </main>
     </div>
 
@@ -645,7 +666,7 @@
         
         // --- GEMINI API ---
         async function callGemini(prompt) {
-            const apiKey = "AIzaSyCIS06JXAE4tLp8o4ttXttFJjpVYPFU6KE"; // The platform provides the key
+            const apiKey = "__API_KEY__";
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
             const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
 
@@ -714,10 +735,12 @@
         // --- UI & DYNAMIC CONTENT ---
         function populateContent() {
             const gridContainer = document.getElementById('main-sections-grid');
-            const expandableContainer = document.getElementById('expandable-content');
             
             mainSections.forEach(section => {
-                gridContainer.innerHTML += `
+                // Create a wrapper div for each section (card + content)
+                const sectionWrapper = document.createElement('div');
+                sectionWrapper.className = 'section-wrapper';
+                sectionWrapper.innerHTML = `
                     <div class="bg-card-bg rounded-lg shadow-sm border border-border-color">
                         <div class="p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" onclick="toggleSection('${section.id}')">
                             <div class="flex items-center justify-between">
@@ -729,9 +752,12 @@
                             </div>
                             <p class="text-sm text-text-secondary mt-1 ml-9">${section.subtitle}</p>
                         </div>
-                    </div>`;
-
-                expandableContainer.innerHTML += `<div class="section-content" id="section-${section.id}"><div class="p-6 border border-border-color rounded-lg bg-card-bg shadow-sm" id="content-${section.id}"></div></div>`;
+                    </div>
+                    <div class="section-content" id="section-${section.id}">
+                        <div class="p-6 border border-border-color rounded-lg bg-card-bg shadow-sm" id="content-${section.id}"></div>
+                    </div>
+                `;
+                gridContainer.appendChild(sectionWrapper);
             });
 
             // Populate specific sections
@@ -1192,4 +1218,3 @@ Question: "${userMessage}"`;
     </script>
 </body>
 </html>
-
