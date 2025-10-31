@@ -6,20 +6,8 @@
     <title>Rohit Acharya - AI Lead, Sales Intelligence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.        async function callGemini(prompt) {
-            const apiKey = "GEMINI_KEY";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-            
-            // Optimized payload for faster responses
-            const payload = { 
-                contents: [{ role: "user", parts: [{ text: prompt }] }],
-                generationConfig: {
-                    maxOutputTokens: 150,  // Limit output for faster generation
-                    temperature: 0.3,      // Lower temperature for more focused responses
-                    topP: 0.8,            // Reduce randomness for speed
-                    topK: 20              // Limit vocabulary for faster selection
-                }
-            };leapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Fixed the broken link tag that contained stray code -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -57,7 +45,7 @@
             display: none;
         }
         
-        @frames spin {
+        @keyframes spin {
             to { transform: rotate(360deg); }
         }
         .spinner {
@@ -741,8 +729,11 @@
         
         // --- GEMINI API ---
         async function callGemini(prompt) {
-            const apiKey = "AIzaSyCIS06JXAE4tLp8o4ttXttFJjpVYPFU6KE"; // The platform provides the key
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+            // Removed hardcoded API key to allow the platform to inject it.
+            
+            const apiKey = "GEMINI_KEY";
+            // Updated model name to the recommended one.
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
             const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
 
             try {
@@ -1304,8 +1295,3 @@ Question: "${userMessage}"`;
     </script>
 </body>
 </html>
-
-
-
-
-
