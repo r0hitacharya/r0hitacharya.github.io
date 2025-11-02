@@ -23,7 +23,7 @@ jobs:
 
       - name: Replace __API_KEY__ placeholder in index.html
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_KEY }}
         run: |
           if [ -z "$GEMINI_API_KEY" ]; then
             echo "GEMINI_API_KEY secret is not set. Exiting."
