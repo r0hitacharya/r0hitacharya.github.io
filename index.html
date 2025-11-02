@@ -1,79 +1,17 @@
-<div id="embeddedResumeWrapper" style="margin-top: 1.5rem;">
+<div id="resumeLinkWrapper" style="margin-top: 1.5rem;">
   <div style="display:flex; align-items:center; justify-content:space-between; gap:0.75rem; margin-bottom:0.5rem;">
-    <div style="font-weight:600; color:var(--text-primary);">Embedded Resume (125% zoom)</div>
+    <div style="font-weight:600; color:var(--text-primary);">Open Resume</div>
     <div style="display:flex; gap:0.5rem; align-items:center;">
-      <button id="openResumeNative" type="button" class="px-3 py-1 rounded-lg bg-accent-color text-white hover:opacity-90 transition-opacity" title="Open in new tab (native zoom)">
-        Open in new tab
-      </button>
-      <button id="toggleEmbedZoom" type="button" class="px-3 py-1 rounded-lg bg-card-bg border border-border-color text-text-primary" title="Toggle 125% zoom">
-        Toggle 125% Zoom
-      </button>
-    </div>
-  </div>
-
-  <!-- Wrapper controls viewport and provides scroll; inner .zoomContainer scales the iframe -->
-  <div id="embedViewport" style="width:100%; height:72vh; overflow:auto; border:1px solid var(--border-color); border-radius:8px; background:var(--card-bg);">
-    <div id="zoomContainer" style="transform-origin: 0 0; transform: scale(1.25); width: 80%; /* base width before scaling */">
-      <iframe id="embeddedResume" src="https://rohit-resume-1075378436404.us-west1.run.app/" title="Rohit's Resume" style="width:100%; height:72vh; border:0; display:block; background:white;" sandbox="allow-scripts allow-forms allow-same-origin allow-popups"></iframe>
+      <a id="openResumeNative" class="px-3 py-1 rounded-lg bg-accent-color text-white hover:opacity-90 transition-opacity" href="https://rohit-resume-1075378436404.us-west1.run.app/" target="_blank" rel="noopener noreferrer" title="Open resume in a new tab (recommended)">
+        Open Resume (new tab)
+      </a>
+      <a id="viewResumeSameTab" class="px-3 py-1 rounded-lg bg-card-bg border border-border-color text-text-primary" href="https://rohit-resume-1075378436404.us-west1.run.app/" title="Open resume in this tab">
+        Open Here
+      </a>
     </div>
   </div>
 
   <p class="text-sm text-text-secondary mt-2" style="margin: .5rem 0 0;">
-    Notes: The iframe is scaled to 125% via CSS transform so the embedded site appears zoomed. If the framed site enforces content-security-policy or blocks embedding, opening in a new tab will always work.
+    The resume is available at the external URL. Embedding has been removed to avoid cross-origin and content-security policy issues — click one of the links above to open it directly.
   </p>
-
-  <script>
-    (function(){
-      const resumeUrl = 'https://rohit-resume-1075378436404.us-west1.run.app/';
-      const openBtn = document.getElementById('openResumeNative');
-      const toggleBtn = document.getElementById('toggleEmbedZoom');
-      const zoomContainer = document.getElementById('zoomContainer');
-
-      // Open the resume in a new tab (native browser zoom)
-      openBtn.addEventListener('click', () => {
-        window.open(resumeUrl, '_blank', 'noopener,noreferrer');
-      });
-
-      // Toggle 125% zoom on/off for the embedded view
-      let isZoomed = true; // initial state matches snippet (scale(1.25))
-      function applyZoom() {
-        if (isZoomed) {
-          zoomContainer.style.transform = 'scale(1.25)';
-          // width compensates for scaling so the content doesn't overflow unnecessarily.
-          zoomContainer.style.width = '80%';
-          toggleBtn.textContent = 'Disable 125% Zoom';
-        } else {
-          zoomContainer.style.transform = 'scale(1)';
-          zoomContainer.style.width = '100%';
-          toggleBtn.textContent = 'Enable 125% Zoom';
-        }
-      }
-      toggleBtn.addEventListener('click', () => {
-        isZoomed = !isZoomed;
-        applyZoom();
-      });
-
-      // Initialize button label
-      applyZoom();
-
-      // Accessibility: if iframe fails to load due to X-Frame-Options or CSP, show a helpful message
-      const iframe = document.getElementById('embeddedResume');
-      iframe.addEventListener('load', () => {
-        // Try to detect common embed blocking: if we can't access iframe contentWindow.location, assume it's cross-origin (expected).
-        // If the iframe has zero height after load or blank, suggest opening in new tab.
-        setTimeout(() => {
-          try {
-            // Accessing cross-origin content will throw; this block is a best-effort hint only.
-            const doc = iframe.contentDocument || iframe.contentWindow.document;
-            if (!doc || doc.documentElement.innerHTML.trim().length === 0) {
-              console.warn('Iframe appeared empty after load — consider opening in a new tab.');
-            }
-          } catch (e) {
-            // Cross-origin: ignore, but nothing to do.
-          }
-        }, 300);
-      });
-
-    })();
-  </script>
 </div>
