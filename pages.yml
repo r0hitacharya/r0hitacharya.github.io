@@ -21,7 +21,7 @@ jobs:
 
       - name: Inject GEMINI_KEY into index.html
         run: |
-          sed -i "s/__API_KEY__/${GEMINI_KEY}/g" index.html
+          sed -i "s|__API_KEY__|${GEMINI_KEY}|g" index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
