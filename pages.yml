@@ -2,8 +2,7 @@ name: Inject API Key and Deploy
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 permissions:
   contents: read
@@ -13,15 +12,19 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
     env:
       GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Verify secret present (redacted in logs)
+        run: test -n "${GEMINI_KEY}"
+
       - name: Inject GEMINI_KEY into index.html
-        run: |
-          sed -i "s|__API_KEY__|${GEMINI_KEY}|g" index.html
+        run: sed -i "s|__API_KEY__|${GEMINI_KEY}|g" index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -33,3 +36,4 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v3
+        id: deployment
